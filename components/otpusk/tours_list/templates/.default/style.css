@@ -10,3 +10,20 @@ input[name="tours_type"][type="radio"] {
 	margin-bottom: 0 !important;
 	margin-top: 100px;
 }
+
+.tour_detail_page_slider-item {
+  height: 250px !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*.tours_list_filter-nights {
+  width: 50px !important;
+  display: inline-block !important;
+}
+
+.tours_list_filter-date {
+  width: 150px !important;
+  display: inline-block !important;
+}*/

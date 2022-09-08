@@ -28,10 +28,42 @@ class ToursList {
     $this->section_code = $this->getSectionCode();
     if (isset($_GET['tour_id'])) {
       $this->detail_item = $this->getDetailItem();
-    } else {
+    } elseif (isset($_GET['tours_type'])) {
       $this->search_filter = $this->getSerarchFilter();
       $this->items_list = $this->getIblocksList();
+      $this->country_list = $this->getContryList();
+      $this->towns_list = $this->getTownsList();
     }
+  }
+
+  function getTownsList () {
+    $src = CIBlockElement::GetList([], [
+      'IBLOCK_CODE' => 'city',
+    ], false, false, [
+      'ID',
+      'IBLOCK_ID',
+      'NAME',
+    ]);
+    $arr = [];
+    while ($item = $src->Fetch()) {
+      array_push($arr, $item);
+    }
+    return $arr;
+  }
+
+  function getContryList () {
+    $src = CIBlockElement::GetList([], [
+      'IBLOCK_CODE' => 'country',
+    ], false, false, [
+      'ID',
+      'IBLOCK_ID',
+      'NAME',
+    ]);
+    $arr = [];
+    while ($item = $src->Fetch()) {
+      array_push($arr, $item);
+    }
+    return $arr;
   }
 
   function getDetailItem () {
@@ -43,8 +75,17 @@ class ToursList {
       'IBLOCK_ID',
       'NAME',
       'DETAIL_TEXT',
+      'PREVIEW_TEXT',
       'DETAIL_PICTURE',
       'PROPERTY_HD_DESC',
+      'PROPERTY_PICTURES',
+      'PROPERTY_POINT_DEPARTURE',
+      'PROPERTY_TOWN',
+      'PROPERTY_DEPARTURE',
+      'PROPERTY_DAYS',
+      'PROPERTY_PRICE_INCLUDE',
+      'PROPERTY_PRICE_NO_INCLUDE',
+      'PROPERTY_NDAYS',
     ]);
     $arr = [];
     while ($item = $src->Fetch()) {
@@ -64,6 +105,7 @@ class ToursList {
           ["NAME" => '%'.$_GET['search'].'%'],
           ["DETAIL_TEXT" => '%'.$_GET['search'].'%'],
           ["PREVIEW_TEXT" => '%'.$_GET['search'].'%'],
+          ["PROPERTY_HD_DESC" => '%'.$_GET['search'].'%'],
         ]
       ];
     } else {
@@ -73,6 +115,24 @@ class ToursList {
         'SECTION_CODE' => $this->section_code,
       ];
     }
+    if (isset($_GET['country']) and !empty($_GET['country'])) {
+      $filter['PROPERTY_COUNTRY'] = $_GET['country'];
+    }
+    if ($_GET['nights_from']) {
+      $filter['>=PROPERTY_DURATION_DAYS'] = $_GET['nights_from'];
+    }
+    if ($_GET['nights_to']) {
+      $filter['<=PROPERTY_DURATION_DAYS'] = $_GET['nights_to'];
+    }
+    if ($_GET['town_from']) {
+      $filter['PROPERTY_POINT_DEPARTURE'] = $_GET['town_from'];
+    }
+    if ($_GET['town_to']) {
+      $filter['PROPERTY_TOWN'] = $_GET['town_to'];
+    }
+    // if ($_GET['date_from']) {
+    //   $filter['PROPERTY_DEPARTURE'] = $_GET['date_from'];
+    // }
     return $filter;
   }
 
@@ -90,6 +150,8 @@ class ToursList {
       'PROPERTY_TOWN',
       'PROPERTY_DEPARTURE',
       'PROPERTY_DAYS',
+      'PROPERTY_COUNTRY',
+      'PROPERTY_DURATION_DAYS',
     ]);
     $arr = [];
     while ($item = $src->Fetch()) {

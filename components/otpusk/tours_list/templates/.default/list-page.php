@@ -19,8 +19,8 @@
         <?php echo ToursList::getTownByID($value['PROPERTY_POINT_DEPARTURE_VALUE'][0])['NAME'];?>
         ~
         <?php echo ToursList::getTownByID($value['PROPERTY_TOWN_VALUE'][0])['NAME'];?>
-        || дней: <?php echo $value['PROPERTY_DAYS_VALUE'];?>
-        ночей: <?php echo $value['PROPERTY_DAYS_VALUE'] + 1; ?>
+        || ночей: <?php echo $value['PROPERTY_DAYS_VALUE'];?>
+        дней: <?php echo $value['PROPERTY_DAYS_VALUE'] + 1; ?>
       </div>
       <div class="pt-5">
         <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
