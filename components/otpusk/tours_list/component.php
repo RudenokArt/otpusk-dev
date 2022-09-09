@@ -28,16 +28,35 @@ class ToursList {
     $this->section_code = $this->getSectionCode();
     if (isset($_GET['tour_id'])) {
       $this->detail_item = $this->getDetailItem();
-    } elseif (isset($_GET['tours_type'])) {
+    // } elseif (isset($_GET['tours_type'])) {
+    } else {
       $this->search_filter = $this->getSerarchFilter();
       $this->items_list = $this->getIblocksList();
       $this->country_list = $this->getContryList();
       $this->towns_list = $this->getTownsList();
+      if ($_GET['sort_date']) {
+        $this->sortItemsByDate();
+      }
     }
   }
 
+  function sortItemsByDate () {
+    $arr = [];
+    foreach ($this->items_list as $key => $value) {
+      $this->items_list[$key]['sort_date'] = strtotime($value['PROPERTY_DEPARTURE_VALUE'][0]);
+      $arr[$key] =  strtotime($value['PROPERTY_DEPARTURE_VALUE'][0]);
+    }
+    if ($_GET['sort_date'] == 'desc') {
+      arsort($arr);
+    } else {asort($arr);}
+    foreach ($arr as $key => $value) {
+      $arr[$key] = $this->items_list[$key];
+    }
+    $this->items_list = $arr;
+  }
+
   function getTownsList () {
-    $src = CIBlockElement::GetList([], [
+    $src = CIBlockElement::GetList(['NAME' => 'ASC'], [
       'IBLOCK_CODE' => 'city',
     ], false, false, [
       'ID',
@@ -52,7 +71,7 @@ class ToursList {
   }
 
   function getContryList () {
-    $src = CIBlockElement::GetList([], [
+    $src = CIBlockElement::GetList(['NAME' => 'ASC'], [
       'IBLOCK_CODE' => 'country',
     ], false, false, [
       'ID',
@@ -95,9 +114,12 @@ class ToursList {
   }
 
   function getSerarchFilter () {
+    if (!$this->section_code) {
+      $this->section_code = ['combi-aviaturs', 'authors-tours'];
+    }
     if (isset($_GET['search']) and !empty($_GET['search'])) {
       $filter = [
-        'ACTIVE' => 'Y',
+        // 'ACTIVE' => 'Y',
         'IBLOCK_CODE' => 'tour',
         'SECTION_CODE' => $this->section_code,
         [
@@ -105,12 +127,11 @@ class ToursList {
           ["NAME" => '%'.$_GET['search'].'%'],
           ["DETAIL_TEXT" => '%'.$_GET['search'].'%'],
           ["PREVIEW_TEXT" => '%'.$_GET['search'].'%'],
-          ["PROPERTY_HD_DESC" => '%'.$_GET['search'].'%'],
         ]
       ];
     } else {
       $filter = [
-        'ACTIVE' => 'Y',
+        // 'ACTIVE' => 'Y',
         'IBLOCK_CODE' => 'tour',
         'SECTION_CODE' => $this->section_code,
       ];
@@ -130,9 +151,6 @@ class ToursList {
     if ($_GET['town_to']) {
       $filter['PROPERTY_TOWN'] = $_GET['town_to'];
     }
-    // if ($_GET['date_from']) {
-    //   $filter['PROPERTY_DEPARTURE'] = $_GET['date_from'];
-    // }
     return $filter;
   }
 

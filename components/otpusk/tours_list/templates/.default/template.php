@@ -3,12 +3,25 @@
 <form action="" method="get">
 	<div class="container pt-5 mt-5 pb-5 border-bottom">
 		<div class="row pt-5">
-      <div class="col-lg-6 col-md-12 col-sm-12 pt-5">
+      <div class="col-lg-6 col-md-12 col-sm-12 pt-10">
+        Поиск тура:
         <input <?php if ($_GET['search']): ?>
           value="<?php echo $_GET['search'];?>"
         <?php endif ?> name="search" type="text" class="form-control" placeholder="Название тура">
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-4 pt-5">
+      <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
+        Продолжительность (ночей) от:
+        <input <?php if ($_GET['nights_from']): ?>
+          value="<?php echo $_GET['nights_from'] ?>"
+        <?php endif ?> type="text" name="nights_from" class="form-control tours_list_filter-nights">
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
+        Продолжительность (ночей) до:
+        <input <?php if ($_GET['nights_to']): ?>
+          value="<?php echo $_GET['nights_to'] ?>"
+        <?php endif ?> type="text" name="nights_to" class="form-control tours_list_filter-nights">
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 pt-10">
         <select name="town_from" class="form-control">
           <option value="">Откуда...</option>
           <?php foreach ($arResult->towns_list as $key => $value): ?>
@@ -18,7 +31,7 @@
           <?php endforeach ?>
         </select>
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-4 pt-5">
+      <div class="col-lg-3 col-md-4 col-sm-4 pt-10">
         <select name="town_to" class="form-control">
           <option value="">Куда...</option>
           <?php foreach ($arResult->towns_list as $key => $value): ?>
@@ -28,8 +41,7 @@
           <?php endforeach ?>
         </select>
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-4 pt-5">
-          Страна:
+      <div class="col-lg-3 col-md-4 col-sm-4 pt-10">
         <select name="country" class="form-control">
           <option value="">Выбрать...</option>
           <?php foreach ($arResult->country_list as $key => $value): ?>
@@ -39,27 +51,15 @@
           <?php endforeach ?>
         </select>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 pt-5">
-        Дата отправления:
-        <input <?php if ($_GET['date_from']): ?>
-          value="<?php echo $_GET['date_from']; ?>"
-        <?php endif ?> type="text" class="form-control tours_list_filter-date" name="date_from" >
+      <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
+        <button class="btn btn-primary w-100">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 pt-5">
-        Продолжительность (ночей) от:
-        <input <?php if ($_GET['nights_from']): ?>
-          value="<?php echo $_GET['nights_from'] ?>"
-        <?php endif ?> type="text" name="nights_from" class="form-control tours_list_filter-nights">
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 pt-5">
-        Продолжительность (ночей) до:
-        <input <?php if ($_GET['nights_to']): ?>
-          value="<?php echo $_GET['nights_to'] ?>"
-        <?php endif ?> type="text" name="nights_to" class="form-control tours_list_filter-nights">
-      </div>
+
 		</div>
     <div class="row pt-5">
-      <div class="col-lg-3 col-md-6 col-sm-6 pt-5">
+      <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
         <label class="pt-5">
           <input <?php if ($_GET['tours_type'] == 'combi-aviaturs'): ?>
             checked
@@ -67,7 +67,7 @@
           Сборные авиатуры
         </label>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 pt-5">
+      <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
         <label class="pt-5">
           <input <?php if ($_GET['tours_type'] == 'authors-tours'): ?>
             checked
@@ -75,10 +75,23 @@
           Авторские туры
         </label>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6">
-        <button class="btn btn-primary w-100">
-          <i class="fa fa-search" aria-hidden="true"></i>
+      <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
+        Сортировка по дате: 
+        <button <?php if ($_GET['sort_date'] == 'desc'): ?>
+          style="color: blue;"
+        <?php endif ?> name="sort_date" value="desc" class="tours_list_filter-sort">
+          <i class="fa fa-sort-desc" aria-hidden="true"></i>
         </button>
+        <button <?php if ($_GET['sort_date'] == 'asc'): ?>
+          style="color: blue;"
+        <?php endif ?> name="sort_date" value="asc" class="tours_list_filter-sort">
+          <i class="fa fa-sort-asc" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
+        <a class="btn btn-primary" href="?tours_type=<?php echo $_GET['tours_type'];?>">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
 	</div>
@@ -92,4 +105,3 @@
 <?php else: ?>
 	<?php include_once 'list-page.php'; ?>
 <?php endif ?>
-

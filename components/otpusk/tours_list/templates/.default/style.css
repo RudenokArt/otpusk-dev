@@ -18,12 +18,22 @@ input[name="tours_type"][type="radio"] {
   background-size: cover;
 }
 
-/*.tours_list_filter-nights {
-  width: 50px !important;
-  display: inline-block !important;
+.tours_list_filter-sort {
+  font-size: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color:  grey;
+  background: transparent;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  transition-duration: 1s;
+  border-radius: 5px;
 }
 
-.tours_list_filter-date {
-  width: 150px !important;
-  display: inline-block !important;
-}*/
+.tours_list_filter-sort:hover {
+  background: #EB5019;
+  color: white;
+  transition-duration: 1s;
+  border-radius: 10px;
+}
