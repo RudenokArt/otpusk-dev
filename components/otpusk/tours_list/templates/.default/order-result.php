@@ -34,10 +34,13 @@ class B24_tourOrder extends B24_class {
 
 
 <div class="container pt-50 pb-50">
-	<div class="alert-success text-center pt-10 pb-10 h5">
-		Ваша заявка направлена менеджеру. <br> Мы свяжемся с вами.
-	</div>
-	<div class="alert-warning text-center pt-10 pb-10 h5">
-   Ошибка отправки...
- </div>
+  <?php if (json_decode((new B24_tourOrder)->deal)->result): ?>
+    <div class="alert-success text-center pt-10 pb-10 h5">
+      Ваша заявка направлена менеджеру. <br> Мы свяжемся с вами.
+    </div>
+  <?php else: ?>
+    <div class="alert-danger text-center pt-10 pb-10 h5">
+     Ошибка отправки...
+   </div>
+ <?php endif ?>
 </div>
