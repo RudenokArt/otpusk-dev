@@ -154,11 +154,31 @@ class ToursList {
     return $filter;
   }
 
+  function swichPage ($page) {
+    $arr = $_GET;
+    $arr['page'] = $page;
+    $str = http_build_query($arr);
+    return $str;
+  }
+
+  function pagination () {
+    if (isset($_GET['page'])) {
+      $iNumPage = $_GET['page'];
+    } else {
+      $iNumPage = '1';
+    }
+    $arr = [
+      'nPageSize' => 5,
+      'iNumPage' => $iNumPage,
+    ];
+    return $arr;
+  }
+
   function getIblocksList () {
     $src = CIBlockElement::GetList([
       'SORT' => 'DESC',
       'ID' => 'DESC',
-    ], $this->search_filter, false, false, [
+    ], $this->search_filter, false, $this->pagination(), [
       'ID',
       'IBLOCK_ID',
       'NAME',
@@ -171,6 +191,8 @@ class ToursList {
       'PROPERTY_COUNTRY',
       'PROPERTY_DURATION_DAYS',
     ]);
+    $this->NavPageCount = $src->NavPageCount;
+    $this->NavPageNomer = $src->NavPageNomer;
     $arr = [];
     while ($item = $src->Fetch()) {
       array_push($arr, $item);

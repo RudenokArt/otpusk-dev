@@ -43,7 +43,7 @@
       </div>
       <div class="col-lg-3 col-md-4 col-sm-4 pt-10">
         <select name="country" class="form-control">
-          <option value="">Выбрать...</option>
+          <option value="">Страна...</option>
           <?php foreach ($arResult->country_list as $key => $value): ?>
             <option <?php if ($_GET['country'] == $value['ID']): ?>
               selected
@@ -63,7 +63,7 @@
         <label class="pt-5">
           <input <?php if ($_GET['tours_type'] == 'combi-aviaturs'): ?>
             checked
-          <?php endif ?> required type="radio" name="tours_type"  value="combi-aviaturs">
+          <?php endif ?> type="radio" name="tours_type"  value="combi-aviaturs">
           Сборные авиатуры
         </label>
       </div>
@@ -71,7 +71,7 @@
         <label class="pt-5">
           <input <?php if ($_GET['tours_type'] == 'authors-tours'): ?>
             checked
-          <?php endif ?> required type="radio" name="tours_type"  value="authors-tours">
+          <?php endif ?> type="radio" name="tours_type"  value="authors-tours">
           Авторские туры
         </label>
       </div>
@@ -89,7 +89,7 @@
         </button>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6 pt-10">
-        <a class="btn btn-primary" href="?tours_type=<?php echo $_GET['tours_type'];?>">
+        <a class="btn btn-primary" href="?">
           <i class="fa fa-times" aria-hidden="true"></i>
         </a>
       </div>

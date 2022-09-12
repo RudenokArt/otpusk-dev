@@ -9,6 +9,7 @@ $interface_include_path = '/local/php_interface/include/';
 					     'Set' 	=> $interface_include_path ."/classes/settings.php",
 			'\travelsoft\Cart' 	=> $interface_include_path ."/classes/cart.php",
       'InfoBlock'   => $interface_include_path ."/classes/InfoBlock.php",
+      'B24_class'   => $interface_include_path ."/classes/B24_class.php",
 		)
 	);
 

@@ -1,3 +1,9 @@
+.tours_search_filter_form {
+  background: #286090;
+}
+.tours_search_filter_form label {
+  display: inline-block;
+}
 input[name="tours_type"][type="radio"] {
 	display: inline;
 	opacity: 1;
