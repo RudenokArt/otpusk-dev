@@ -131,7 +131,7 @@ class ToursList {
       ];
     } else {
       $filter = [
-        // 'ACTIVE' => 'Y',
+        'ACTIVE' => 'Y',
         'IBLOCK_CODE' => 'tour',
         'SECTION_CODE' => $this->section_code,
       ];
