@@ -40,8 +40,10 @@
   <div class="row pt-50 pb-50">
     <div class="col-10 col-offset-1" id="tour_detail_page_slider">
       <?php foreach ($arResult->detail_item['PROPERTY_PICTURES_VALUE'] as $key => $value): ?>
-        <div style="background-image: url(<?php echo CFile::GetFileArray($value)['SRC'];?>);" 
-          class="tour_detail_page_slider-item border"></div>
+        <?php $img = CFile::GetFileArray($value)['SRC']; ?>
+        <div class="tour_detail_page_slider-item border">
+            <img src="<?php echo CFile::GetFileArray($value)['SRC'];?>" alt="">
+          </div>
         <?php endforeach ?>
       </div>
     </div>

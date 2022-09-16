@@ -4,11 +4,15 @@
     <?php foreach ($arResult->items_list as $key => $value): ?>
       <div class="row pt-20">
         <div class="col-lg-4 col-md-6 col-sm-6">
-          <img src="<?php echo CFile::GetFileArray($value['PREVIEW_PICTURE'])['SRC'] ?>" alt="<?php echo $value['NAME']; ?>">
+          <a href="?tour_id=<?php echo $value['ID'];?>">
+              <img src="<?php echo CFile::GetFileArray($value['PREVIEW_PICTURE'])['SRC'] ?>" alt="<?php echo $value['NAME']; ?>">
+            </a>
         </div>
         <div class="col-lg-8 col-md-6 col-sm-6">
           <div class="h4">
-            <?php echo $value['NAME']; ?>
+            <a href="?tour_id=<?php echo $value['ID'];?>">
+              <?php echo $value['NAME']; ?>
+            </a>
           </div>
           <div class="pt-5">
             <?php echo $value['PREVIEW_TEXT'];?>
