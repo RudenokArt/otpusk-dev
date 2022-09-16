@@ -11,17 +11,19 @@ class B24_tourOrder extends B24_class {
     '; Email: '.$_POST['email'].
     '; тел.: '.$_POST['phone'];
     $this->message = self::RestApiRequest('im.message.add.json', [
-      'DIALOG_ID' => 27427,
+      'DIALOG_ID' => 15025,
       'MESSAGE' => $this->text,
     ]);
     $this->deal = self::RestApiRequest('crm.deal.add.json', [
       'fields' => [
         'TITLE' => 'Заявка на тур: '.$_POST['tour_name'],
-        'STAGE_ID' => 'C4:NEW',
+        'STAGE_ID' => 'C9:NEW',
+        'STAGE_SEMANTIC_ID'=> 'P',
+        'IS_NEW' => 'N',
         'OPENED' => 'Y',
-        'ASSIGNED_BY_ID' => 27427,
+        'ASSIGNED_BY_ID' => 15025,
         'COMMENTS' => $this->text,
-        'CATEGORY_ID' => 10,
+        'CATEGORY_ID' => 9,
         'TYPE_ID' => 'SERVICES',   
       ],
     ]);
