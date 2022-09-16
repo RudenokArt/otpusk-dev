@@ -1172,34 +1172,29 @@ function getDefaultDirection () {
 
 }
 
-// добавление курсов валют
-function AddCurrentExchangeRate () {
+function SetCurrentExchangeRate () {
   $date_name = ConvertTimeStamp(time(), 'SHORT');
-  $arr = explode('.', $date_name);
-  $date_code = $arr[0].'-'.$arr[1].'-'.$arr[2];
+    $arr = explode('.', $date_name);
+    $date_code = $arr[0].'-'.$arr[1].'-'.$arr[2];
 
-  $check_date = new InfoBlock([],[
-    'NAME'=> $date_name,
-    'IBLOCK_ID'=>23,
-  ],false,false, ['ID','NAME']);
-
-  $exchange_rates = new CIBlockElement;
-  if (count($check_date->items_arr) > 0) {
-    return;
-  } else {
-    $exchange_rates->Add([
+    $check_date = new InfoBlock([],[
+      'NAME'=> $date_name,
       'IBLOCK_ID'=>23,
-      'NAME' => $date_name,
-      'CODE' => $date_code,
-      'ACTIVE_FROM'=> $date_name,
-      'PROPERTY_VALUES'=>[
-        // 'USD' => $previous_rate['PROPERTY_USD_VALUE'],
-        // 'EUR' => $previous_rate['[PROPERTY_EUR_VALUE'],
-        // 'RUB' => $previous_rate['PROPERTY_RUB_VALUE'],
-        'USD' => 1,
-        'EUR' => 1,
-        'RUB' => 1,
-        'DATE' =>  $date_name,
-      ]]);
-  };
+    ],false,false, ['ID','NAME']);
+    if (count($check_date->items_arr) > 0) {
+      return;
+    } else {
+      (new CIBlockElement)->Add([
+        'IBLOCK_ID'=>23,
+        'NAME' => $date_name,
+        'CODE' => $date_code,
+        'ACTIVE_FROM'=> $date_name,
+        'PROPERTY_VALUES'=>[
+          'USD' => 1,
+          'EUR' => 1,
+          'RUB' => 1,
+          'DATE' =>  $date_name,
+        ]]);
+    };
+    echo 'SetCurrentExchangeRate';
 }

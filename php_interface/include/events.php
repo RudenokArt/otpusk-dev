@@ -259,9 +259,20 @@ function bxOnBeforeUserChangePassword($arFields) {
 
 // ===== СИНХРОНИЗАЦИЯ КУРСОВ ВАЛЮТ =====
 
+  // AddEventHandler("main", "OnPageStart", function () {
+  
+  // });
+
   AddEventHandler("iblock", "OnAfterIBlockElementAdd", function ($arFields) {
     if ($arFields['ID']>0 and $arFields['IBLOCK_ID']==23) {
-      $exchange_rates = new InfoBlock(['ID'=>'DESC'], ['IBLOCK_ID'=>23], false, ['nTopCount'=>2],[
+      $exchange_rates = new InfoBlock([
+        "DATE_ACTIVE_FROM" => "DESC",
+        "ID" => "DESC",
+      ], [
+        'IBLOCK_ID'=>23,
+      ], false, [
+        'nTopCount'=>2
+      ],[
         'ID',
         'IBLOCK_ID',
         'CODE',
