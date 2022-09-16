@@ -1182,6 +1182,7 @@ function SetCurrentExchangeRate () {
       'IBLOCK_ID'=>23,
     ],false,false, ['ID','NAME']);
     if (count($check_date->items_arr) > 0) {
+      var_dump($check_date->items_arr);
       return;
     } else {
       (new CIBlockElement)->Add([
@@ -1196,5 +1197,4 @@ function SetCurrentExchangeRate () {
           'DATE' =>  $date_name,
         ]]);
     };
-    echo 'SetCurrentExchangeRate';
 }
