@@ -20,11 +20,16 @@
               Подробнее...
             </a>
           </div>
+
           <div class="pt-5">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <?php echo ToursList::getTownByID($value['PROPERTY_POINT_DEPARTURE_VALUE'][0])['NAME'];?>
+            <?php if ($value['PROPERTY_POINT_DEPARTURE_VALUE']): ?>
+              <?php echo ToursList::getTownByID($value['PROPERTY_POINT_DEPARTURE_VALUE'][0])['NAME'];?>
+            <?php endif ?>
             ~
-            <?php echo ToursList::getTownByID($value['PROPERTY_TOWN_VALUE'][0])['NAME'];?>
+            <?php if ($value['PROPERTY_TOWN_VALUE']): ?>
+              <?php echo ToursList::getTownByID($value['PROPERTY_TOWN_VALUE'][0])['NAME'];?>
+            <?php endif ?>
             || ночей: <?php echo $value['PROPERTY_DAYS_VALUE'];?>
             дней: <?php echo $value['PROPERTY_DAYS_VALUE'] + 1; ?>
           </div>

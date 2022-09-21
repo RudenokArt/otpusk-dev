@@ -15,9 +15,13 @@
       </div>
       <div class="pt-5">
         <i class="fa fa-map-marker" aria-hidden="true"></i>
-        <?php echo ToursList::getTownByID($arResult->detail_item['PROPERTY_POINT_DEPARTURE_VALUE'][0])['NAME'];?>
+        <?php if ($arResult->detail_item['PROPERTY_POINT_DEPARTURE_VALUE']): ?>
+          <?php echo ToursList::getTownByID($arResult->detail_item['PROPERTY_POINT_DEPARTURE_VALUE'][0])['NAME'];?>
+        <?php endif ?>
         ~
-        <?php echo ToursList::getTownByID($arResult->detail_item['PROPERTY_TOWN_VALUE'][0])['NAME'];?>
+        <?php if ($arResult->detail_item['PROPERTY_TOWN_VALUE']): ?>
+          <?php echo ToursList::getTownByID($arResult->detail_item['PROPERTY_TOWN_VALUE'][0])['NAME'];?>
+        <?php endif ?>
         || ночей: <?php echo $arResult->detail_item['PROPERTY_DAYS_VALUE'];?>
         дней: <?php echo $arResult->detail_item['PROPERTY_DAYS_VALUE'] + 1; ?>
         <?php $order_tour = $arResult->detail_item;?>
@@ -85,3 +89,4 @@
     </div>
   </div>
 </div>
+

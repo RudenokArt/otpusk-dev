@@ -24,7 +24,7 @@
       <div class="col-lg-3 col-md-4 col-sm-4 pt-10">
         <select name="town_from" class="form-control">
           <option value="">Откуда...</option>
-          <?php foreach ($arResult->towns_list as $key => $value): ?>
+          <?php foreach ($arResult->towns_from_list as $key => $value): ?>
             <option <?php if ($_GET['town_from'] == $value['ID']): ?>
               selected
             <?php endif ?> value="<?php echo $value['ID'];?>"><?php echo $value['NAME'];?></option>
@@ -34,7 +34,7 @@
       <div class="col-lg-3 col-md-4 col-sm-4 pt-10">
         <select name="town_to" class="form-control">
           <option value="">Куда...</option>
-          <?php foreach ($arResult->towns_list as $key => $value): ?>
+          <?php foreach ($arResult->towns_to_list as $key => $value): ?>
             <option <?php if ($_GET['town_to'] == $value['ID']): ?>
               selected
             <?php endif ?> value="<?php echo $value['ID'];?>"><?php echo $value['NAME'];?></option>

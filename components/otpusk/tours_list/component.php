@@ -26,14 +26,17 @@ class ToursList {
 
   function __construct() {
     $this->section_code = $this->getSectionCode();
+    $this->tours_routes = $this->getToursRoutes();
+      $this->country_list = $this->getContryList();
+      $this->towns_from_list = $this->getTownsList($this->tours_routes['town_from']);
+      $this->towns_to_list = $this->getTownsList($this->tours_routes['town_to']);
     if (isset($_GET['tour_id'])) {
       $this->detail_item = $this->getDetailItem();
-    // } elseif (isset($_GET['tours_type'])) {
     } else {
       $this->search_filter = $this->getSerarchFilter();
-      $this->items_list = $this->getIblocksList();
-      $this->country_list = $this->getContryList();
-      $this->towns_list = $this->getTownsList();
+      if ($arParams['MAIN_PAGE_FORM'] != "Y") {
+        $this->items_list = $this->getIblocksList();
+      }
       if ($_GET['sort_date']) {
         $this->sortItemsByDate();
       }
@@ -55,9 +58,10 @@ class ToursList {
     $this->items_list = $arr;
   }
 
-  function getTownsList () {
+  function getTownsList ($id_arr) {
     $src = CIBlockElement::GetList(['NAME' => 'ASC'], [
       'IBLOCK_CODE' => 'city',
+      'ID' => $id_arr,
     ], false, false, [
       'ID',
       'IBLOCK_ID',
@@ -73,6 +77,7 @@ class ToursList {
   function getContryList () {
     $src = CIBlockElement::GetList(['NAME' => 'ASC'], [
       'IBLOCK_CODE' => 'country',
+      'ID' => $this->tours_routes['country'],
     ], false, false, [
       'ID',
       'IBLOCK_ID',
@@ -198,6 +203,55 @@ class ToursList {
       array_push($arr, $item);
     }
     return $arr;
+  }
+
+  function getToursRoutes () {
+    $src = CIBlockElement::GetList([
+      'SORT' => 'DESC',
+      'ID' => 'DESC',
+    ], [
+      'IBLOCK_CODE' => 'tour',
+      'SECTION_CODE' => ['combi-aviaturs', 'authors-tours'],
+      'ACTIVE' => 'Y'
+
+    ], false, false, [
+      'ID',
+      'IBLOCK_ID',
+      'NAME',
+      'PROPERTY_POINT_DEPARTURE', // город откуда
+      'PROPERTY_TOWN', // город куда
+      'PROPERTY_COUNTRY', // страна
+    ]);
+    $arr = [];
+    while ($item = $src->Fetch()) {
+      array_push($arr, [
+        'town_from' => $item['PROPERTY_POINT_DEPARTURE_VALUE'],
+        'town_to' => $item['PROPERTY_TOWN_VALUE'],
+        'country' => $item['PROPERTY_COUNTRY_VALUE'],
+      ]);
+    }
+    $town_from = [];
+    $town_to = [];
+    $country = [];
+    foreach ($arr as $key => $value) {
+      if ($value['town_from']) {
+        array_push($town_from, $value['town_from'][0]);
+      }
+      if ($value['town_to']) {
+        array_push($town_to, $value['town_to'][0]);
+      }
+      if ($value['country']) {
+        array_push($country, $value['country'][0]);
+      }
+    }
+    $town_from = array_unique($town_from);
+    $town_to = array_unique($town_to);
+    $country = array_unique($country);
+    return [
+      'town_from' => $town_from,
+      'town_to' => $town_to,
+      'country' => $country,
+    ];
   }
 
   function getSectionCode () {
